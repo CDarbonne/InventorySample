@@ -48,6 +48,13 @@
                                          ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}" 
                                          Tag="Customers" />
 
+                <!-- new view created to hold new list of top customers -->
+                <views:TopCustomersPane Margin="12"
+                                         Width="600"
+                                         Height="250"
+                                         ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}" 
+                                         Tag="Customers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
                 <views:ProductsPane Margin="12" 
                                         Width="400"
                                         Height="250"

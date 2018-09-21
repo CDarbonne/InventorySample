@@ -13,46 +13,30 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using Windows.UI.Xaml.Navigation;
-
-using Inventory.ViewModels;
+using Inventory.Models;
 
 namespace Inventory.Views
 {
-    public sealed partial class DashboardView : Page
+    public sealed partial class TopCustomersPane : UserControl
     {
-        public DashboardView()
+        public TopCustomersPane()
         {
-            ViewModel = ServiceLocator.Current.GetService<DashboardViewModel>();
             InitializeComponent();
         }
 
-        public DashboardViewModel ViewModel { get; }
-
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        #region ItemsSource
+        public IList<CustomerModel> ItemsSource
         {
-            await ViewModel.LoadAsync();
+            get { return (IList<CustomerModel>)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            ViewModel.Unload();
-        }
-
-        private void OnItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (e.ClickedItem is Control control)
-            {
-                ViewModel.ItemSelected(control.Tag as String);
-            }
-        }
-
-        private void ProductsPane_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
+        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IList<CustomerModel>), typeof(TopCustomersPane), new PropertyMetadata(null));
+        #endregion
     }
 }

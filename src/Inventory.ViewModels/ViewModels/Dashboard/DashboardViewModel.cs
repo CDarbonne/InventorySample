@@ -42,6 +42,14 @@ namespace Inventory.ViewModels
             set => Set(ref _customers, value);
         }
 
+        //New list created to store top customers ordered list
+        private IList<CustomerModel> _customersTop = null;
+        public IList<CustomerModel> CustomersTop
+        {
+            get => _customersTop;
+            set => Set(ref _customersTop, value);
+        }
+
         private IList<ProductModel> _products = null;
         public IList<ProductModel> Products
         {
@@ -60,6 +68,7 @@ namespace Inventory.ViewModels
         {
             StartStatusMessage("Loading dashboard...");
             await LoadCustomersAsync();
+            await LoadTopCustomersAsync(); //new await async call for top customers
             await LoadOrdersAsync();
             await LoadProductsAsync();
             EndStatusMessage("Dashboard loaded");
@@ -67,6 +76,7 @@ namespace Inventory.ViewModels
         public void Unload()
         {
             Customers = null;
+            CustomersTop = null; //new null setting
             Products = null;
             Orders = null;
         }
@@ -80,6 +90,22 @@ namespace Inventory.ViewModels
                     OrderByDesc = r => r.CreatedOn
                 };
                 Customers = await CustomerService.GetCustomersAsync(0, 5, request);
+            }
+            catch (Exception ex)
+            {
+                LogException("Dashboard", "Load Customers", ex);
+            }
+        }
+
+        private async Task LoadTopCustomersAsync() //Created new async task to load top customers list with different order TODO: change order to descending by number of orders once function is written.
+        {
+            try
+            {
+                var request = new DataRequest<Customer>
+                {
+                    OrderByDesc = r => r.ChildrenAtHome //Changed order to be unique to help track success of changes made during local machine testing
+                };
+                CustomersTop = await CustomerService.GetCustomersAsync(0, 5, request);
             }
             catch (Exception ex)
             {
@@ -109,7 +135,7 @@ namespace Inventory.ViewModels
             {
                 var request = new DataRequest<Product>
                 {
-                    OrderByDesc = r => r.CreatedOn
+                    OrderByDesc = r => r.StockUnits //Changed order from arbitrary order to number of units stocked as this more closely reperesents the "top" products. TODO: change order to descending by number of products sold after corresponding function is written
                 };
                 Products = await ProductService.GetProductsAsync(0, 5, request);
             }

@@ -11,7 +11,7 @@
     <AssemblyName>Inventory.Sample</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -232,6 +232,9 @@
     </Compile>
     <Compile Include="Views\Dashboard\Parts\ChartPane.xaml.cs">
       <DependentUpon>ChartPane.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dashboard\Parts\TopCustomersPane.xaml.cs">
+      <DependentUpon>TopCustomersPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dashboard\Parts\CustomersPane.xaml.cs">
       <DependentUpon>CustomersPane.xaml</DependentUpon>
@@ -542,6 +545,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dashboard\Parts\ChartPane.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dashboard\Parts\TopCustomersPane.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

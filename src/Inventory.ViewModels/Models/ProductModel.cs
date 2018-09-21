@@ -14,7 +14,7 @@
 
 using System;
 
-using Inventory.Services;
+using Inventory.Services;   
 
 namespace Inventory.Models
 {
